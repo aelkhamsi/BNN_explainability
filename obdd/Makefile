@@ -1,16 +1,17 @@
-CAH_DIR = cache
-LNK_DIR = link
+CAH_DIR = cache/cache
+LNK_DIR = cache/link
+TREE_DIR = tree
 
-BIN = link_struc cache_struc
+CPPFLAGS = -I ${CAH_DIR} -I ${LNK_DIR} -I ${TREE_DIR}
+BIN = link_struc cache_struc tree_struc
 
 CC ?= cc
-CPPFLAGS = -I ${CAH_DIR} -I ${LNK_DIR}
 CFLAGS = -Wall -Wextra -std=c99 -g
 # LDFLAGS =
 
 .PHONY: all test build clean
 
-all: build test
+all: build test main
 
 build: ${BIN}
 
@@ -20,8 +21,16 @@ test: build
 	done
 
 clean:
-	rm -f *.o ${BIN}
+	rm -f *.o ${BIN};
+	rm main
 
+
+#main
+main.o: main.c ${CAH_DIR}/cache.h ${TREE_DIR}/tree.h
+	${CC} ${CPPFLAGS} ${CFLAGS} main.c -c
+
+main: main.o cache.o tree.o link.o
+	${CC} main.o cache.o tree.o link.o -o $@ ${LDFLAGS}
 
 
 #link
@@ -44,3 +53,14 @@ test_cache_struc.o: ${CAH_DIR}/test_cache_struc.c ${CAH_DIR}/cache.h
 
 cache_struc: test_cache_struc.o cache.o link.o
 	${CC} test_cache_struc.o cache.o link.o -o $@ ${LDFLAGS}
+
+
+#tree
+tree.o: ${TREE_DIR}/tree.c ${TREE_DIR}/tree.h
+	${CC} ${CFLAGS} ${TREE_DIR}/tree.c -c
+
+test_tree_struc.o: ${TREE_DIR}/test_tree_struc.c ${TREE_DIR}/tree.h
+	${CC} ${CFLAGS} ${TREE_DIR}/test_tree_struc.c -c
+
+tree_struc: test_tree_struc.o tree.o
+	${CC} test_tree_struc.o tree.o -o $@ ${LDFLAGS}
