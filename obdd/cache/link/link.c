@@ -8,6 +8,21 @@ struct link* lnk__empty() {
   return lnk;
 }
 
+struct lelement* llm__empty() {
+  struct lelement* llm = malloc(sizeof(struct lelement));
+  llm->pt = NULL;
+  llm->next = NULL;
+  return llm;
+}
+
+struct lelement* llm__create(void* pt, struct lelement* next) {
+  struct lelement* llm = malloc(sizeof(struct lelement));
+  llm->pt = pt;
+  llm->next = next;
+  return llm;
+}
+
+
 struct lelement* lnk__first(struct link* lnk) {
   return lnk->head;
 }

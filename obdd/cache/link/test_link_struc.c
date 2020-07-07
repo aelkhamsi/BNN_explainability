@@ -13,6 +13,23 @@ void test_lnk__empty() {
   return;
 }
 
+void test_llm__empty() {
+  struct lelement* llm = llm__empty();
+  assert(llm->pt == NULL && llm->next == NULL);
+
+  printf(" .");
+  return;
+}
+
+void test_llm__create() {
+  int data=1;
+  struct lelement* llm = llm__create(&data, NULL);
+  assert(llm->pt == &data && llm->next == NULL);
+
+  printf(" .");
+  return;
+}
+
 void test_lnk__first() {
   //first lelement == END_MARK
   struct link* lnk = lnk__empty();
@@ -21,14 +38,16 @@ void test_lnk__first() {
 
   //first lelement != END_MARK
   int data = 1;
-  struct lelement head = {&data, end_mark};
-  lnk->head = &head;
+  struct lelement* head = llm__create(&data, end_mark);
+  // struct lelement head = {&data, end_mark};
+  lnk->head = head;
   struct lelement* first = lnk__first(lnk);
-  assert(first->pt != NULL && first->next != first && first == &head);
+  assert(first->pt != NULL && first->next != first && first == head);
 
   printf(" .");
   return;
 }
+
 
 void test_llm__is_end_mark() {
   //llm == END_MARK
@@ -38,12 +57,15 @@ void test_llm__is_end_mark() {
 
   //llm != END_MARK
   int data = 1;
-  struct lelement llm = {&data, end_mark};
-  assert(!llm__is_end_mark(&llm));
+  struct lelement* head = llm__create(&data, end_mark);
+  assert(!llm__is_end_mark(head));
 
   printf(" .");
   return;
 }
+
+//////////////////////////
+/////////////////////////
 
 void test_lnk__add_head() {
   struct link* lnk = lnk__empty();
@@ -154,6 +176,8 @@ void test_lnk__remove_tail() {
 
 int main() {
   test_lnk__empty();
+  test_llm__empty();
+  test_llm__create();
   test_lnk__first();
   test_llm__is_end_mark();
   test_lnk__add_head();

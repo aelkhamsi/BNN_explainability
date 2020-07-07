@@ -21,6 +21,10 @@ static struct lelement sentinel = {NULL, &sentinel};
 
 struct link* lnk__empty();
 
+struct lelement* llm__empty();
+
+struct lelement* llm__create(void*, struct lelement*);
+
 struct lelement* lnk__first(struct link*);
 
 int llm__is_end_mark(struct lelement*);
