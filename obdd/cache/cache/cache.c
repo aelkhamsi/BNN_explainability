@@ -10,11 +10,19 @@ struct cache* cah__empty() {
   return cah;
 }
 
+
 int cah__add_llm(struct cache* cah, int depth, struct lelement* llm) {
   lnk__add_head(cah->set[depth], llm);
   return 1;
 }
 
+
+int cah__free(struct cache* cah) {
+  for (int i=0; i<TREE_DEPTH; i++) {
+    lnk__free(cah->set[i]);
+  }
+  return 1;
+}
 
 // int cah__remove_llm(struct cache*, struct lelement*) {
 //   return 1;

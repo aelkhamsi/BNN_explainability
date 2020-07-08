@@ -9,6 +9,7 @@ void test_lnk__empty() {
   struct lelement* head = lnk->head;
   assert(head->pt == NULL && head->next == head);
 
+  lnk__free(lnk);
   printf(" .");
   return;
 }
@@ -17,6 +18,7 @@ void test_llm__empty() {
   struct lelement* llm = llm__empty();
   assert(llm->pt == NULL && llm->next == NULL);
 
+  llm__free(llm);
   printf(" .");
   return;
 }
@@ -26,6 +28,7 @@ void test_llm__create() {
   struct lelement* llm = llm__create(&data, NULL);
   assert(llm->pt == &data && llm->next == NULL);
 
+  llm__free(llm);
   printf(" .");
   return;
 }
@@ -43,6 +46,7 @@ void test_lnk__first() {
   struct lelement* first = lnk__first(lnk);
   assert(first->pt != NULL && first->next != first && first == head);
 
+  lnk__free(lnk);
   printf(" .");
   return;
 }
@@ -59,6 +63,7 @@ void test_llm__is_end_mark() {
   struct lelement* head = llm__create(&data, end_mark);
   assert(!llm__is_end_mark(head));
 
+  lnk__free(lnk);
   printf(" .");
   return;
 }
@@ -74,6 +79,7 @@ void test_lnk__add_head() {
   assert(!llm__is_end_mark(lnk->head));
   assert(llm__is_end_mark(lnk->head->next));
 
+  lnk__free(lnk);
   printf(" .");
   return;
 }
@@ -87,6 +93,7 @@ void test_lnk__remove_head() {
   lnk__add_head(lnk, head);
   assert(lnk__remove_head(lnk) == head);
 
+  lnk__free(lnk);
   printf(" .");
   return;
 }
@@ -100,6 +107,7 @@ void test_llm__next() {
   assert(llm__next(lel) == end_mark);
   assert(llm__next(end_mark) == end_mark);
 
+  llm__free(lel);
   printf(" .");
   return;
 }
@@ -116,12 +124,10 @@ void test_lnk__add_after() {
   assert(lel->next == after);
   assert(llm__is_end_mark(after->next));
 
+  lnk__free(lnk);
   printf(" .");
   return;
 }
-
-//////////////////////////
-/////////////////////////
 
 
 void test_lnk__remove_after() {
@@ -138,6 +144,7 @@ void test_lnk__remove_after() {
   assert(lnk__remove_after(lel2) == lel1);
   assert(llm__is_end_mark(lel2->next));
 
+  lnk__free(lnk);
   printf(" .");
   return;
 }
@@ -156,6 +163,7 @@ void test_lnk__add_tail() {
   assert(tail1->next == tail2);
   assert(llm__is_end_mark(tail2->next));
 
+  lnk__free(lnk);
   printf(" .");
   return;
 }
@@ -174,6 +182,7 @@ void test_lnk__remove_tail() {
   lnk->head = lel1;
   assert(lnk__remove_tail(lnk) == lel2);
 
+  lnk__free(lnk);
   printf(" .");
   return;
 }

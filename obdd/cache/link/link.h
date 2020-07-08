@@ -44,4 +44,9 @@ int lnk__add_tail(struct link*, struct lelement*);
 struct lelement* lnk__remove_tail(struct link*);
 
 
+//FREE
+int lnk__free(struct link*);
+
+int llm__free(struct lelement*);
+
 #endif /* end of include guard: LINK_H */

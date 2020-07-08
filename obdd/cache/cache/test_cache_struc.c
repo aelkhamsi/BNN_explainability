@@ -9,6 +9,7 @@ int test_cah__empty() {
     assert(llm__is_end_mark(cah->set[i]->head));
   }
 
+  cah__free(cah);
   printf(". ");
   return 1;
 }
@@ -24,6 +25,7 @@ int test_cah__add_llm() {
   assert(cah->set[0]->head == llm);
   assert(llm__is_end_mark(cah->set[0]->head->next));
 
+  cah__free(cah);
   printf(". ");
   return 1;
 }

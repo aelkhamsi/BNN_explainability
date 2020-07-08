@@ -91,3 +91,23 @@ struct lelement* lnk__remove_tail(struct link* lnk) {
   struct lelement* tail = lnk__remove_after(cursor);
   return tail;
 }
+
+
+//FREE
+int lnk__free(struct link* lnk) {
+  llm__free(lnk->head);
+  free(lnk);
+  return 1;
+}
+
+int llm__free(struct lelement* llm) {
+  if (llm->next == llm)
+    return 1;
+  else if (llm->next == NULL) {
+    free(llm);
+    return 1;
+  }
+  llm__free(llm->next);
+  free(llm);
+  return 1;
+}

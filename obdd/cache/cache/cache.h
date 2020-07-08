@@ -17,7 +17,7 @@ struct cache* cah__empty();
 
 int cah__add_llm(struct cache*, int depth, struct lelement*);
 
-// int cah__remove_llm(struct cache*, struct lelement*);
+
 
 int cah__free(struct cache*);
 
