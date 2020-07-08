@@ -17,22 +17,29 @@ int cah__add_llm(struct cache* cah, int depth, struct lelement* llm) {
 }
 
 
+int cah__store(struct cache* cah, int depth, struct node* node) {
+  struct lelement* llm = llm__create(node, NULL);
+  lnk__add_head(cah->set[depth], llm);
+  return 1;
+}
+
+
+struct node* cah__find(struct cache* cah, int depth, int evidence_weight) {
+  struct link* lnk = cah->set[depth];
+  struct lelement* cursor = lnk->head;
+  while (cursor->next != cursor && cursor->next != NULL) {
+    struct node* node = cursor->pt;
+    if (evidence_weight >= node->eq_interval.lower_bound && evidence_weight <= node->eq_interval.upper_bound)
+      return node;
+    cursor = cursor->next;
+  }
+  return NULL;
+}
+
+
 int cah__free(struct cache* cah) {
   for (int i=0; i<TREE_DEPTH; i++) {
     lnk__free(cah->set[i]);
   }
   return 1;
 }
-
-// int cah__remove_llm(struct cache*, struct lelement*) {
-//   return 1;
-// }
-
-// if (cah->head == NULL)
-//   cah->head = llm;
-// else {
-//   struct lelement* cursor = cah->head;
-//   while(cursor->next != NULL)
-//     cursor = cursor->next;
-//   cursor->next = llm;
-// }0

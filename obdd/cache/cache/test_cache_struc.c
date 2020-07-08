@@ -30,10 +30,40 @@ int test_cah__add_llm() {
   return 1;
 }
 
+int test_cah__store() {
+  struct cache* cah = cah__empty();
+  struct node* node = node__empty();
+  node__set_eq_interval(node, 10, 20);
+  assert(cah__store(cah, TREE_DEPTH-1, node));
+  assert(cah->set[TREE_DEPTH-1]->head->pt == node);
+  assert(llm__is_end_mark(cah->set[TREE_DEPTH-1]->head->next));
+
+  node__free(node);
+  cah__free(cah);
+  printf(". ");
+  return 1;
+}
+
+int test_cah__find() {
+  struct cache* cah = cah__empty();
+  struct node* node = node__empty();
+  node__set_eq_interval(node, 10, 20);
+  cah__store(cah, TREE_DEPTH-1, node);
+  assert(cah__find(cah, TREE_DEPTH-1, 15) == node);
+  assert(cah__find(cah, TREE_DEPTH-1, 25) == NULL);
+
+  node__free(node);
+  cah__free(cah);
+  printf(". ");
+  return 1;
+}
+
 
 int main() {
   test_cah__empty();
   test_cah__add_llm();
+  test_cah__store();
+  test_cah__find();
 
   printf(" [");
   printf("\033[1;32m");
