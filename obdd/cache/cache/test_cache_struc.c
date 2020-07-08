@@ -7,7 +7,6 @@ int test_cah__empty() {
   struct cache* cah = cah__empty();
   for (int i=0; i<TREE_DEPTH; i++) {
     assert(llm__is_end_mark(cah->set[i]->head));
-    // assert(cah->set[i]->head->next == cah->set[i]->head);
   }
 
   printf(". ");
@@ -21,11 +20,9 @@ int test_cah__add_llm() {
   llm->pt = NULL;
   llm->next = NULL;
   assert(llm__is_end_mark(cah->set[0]->head));
-  // assert(cah->set[0]->head == END_MARK);
   assert(cah__add_llm(cah, 0, llm));
   assert(cah->set[0]->head == llm);
   assert(llm__is_end_mark(cah->set[0]->head->next));
-  // assert(cah->set[0]->head->next == END_MARK);
 
   printf(". ");
   return 1;
