@@ -6,8 +6,8 @@
 
 
 struct interval {
-  int upper_bound;
   int lower_bound;
+  int upper_bound;
 };
 
 struct node {

@@ -6,11 +6,11 @@
 #include <link.h>
 #include <tree.h>
 
-#define TREE_DEPTH 7
+#define TREE_DEPTH 5
 
 
 struct cache {
-  struct link* set[TREE_DEPTH];
+  struct link* set[TREE_DEPTH+1];
 };
 
 

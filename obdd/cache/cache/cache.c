@@ -4,7 +4,7 @@
 
 struct cache* cah__empty() {
   struct cache* cah = malloc(sizeof(struct cache));
-  for (int i=0; i<TREE_DEPTH; i++) {
+  for (int i=0; i<TREE_DEPTH+1; i++) {
     cah->set[i] = lnk__empty();
   }
   return cah;
@@ -38,7 +38,7 @@ struct node* cah__find(struct cache* cah, int depth, int evidence_weight) {
 
 
 int cah__free(struct cache* cah) {
-  for (int i=0; i<TREE_DEPTH; i++) {
+  for (int i=0; i<TREE_DEPTH+1; i++) {
     lnk__free(cah->set[i]);
   }
   return 1;
