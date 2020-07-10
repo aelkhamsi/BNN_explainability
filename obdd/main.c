@@ -41,6 +41,7 @@ struct interval conjunction(struct interval interval1, struct interval interval2
 struct node* build_sub_odd(int depth, float plo, struct cache* cah) {  //plo == prior_log_odds
   struct node* node = node__empty();
   node__set_eq_interval(node, INT_MIN, INT_MAX);
+  node__set_variable_index(node, depth);
 
   for (int e=0; e<=1; e++) {  //every value ek+1 of Ek+1
     float weight_child = 1/2 * (e ? weights[depth] : -1*weights[depth]);
@@ -73,6 +74,50 @@ struct node* build_odd(float weights[], float bias, struct cache* cah) {  //log_
 }
 
 
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+
+int empty_spot(struct node* file[100]) {
+  for (int i=0; i<100; i++) {
+    if (file[i] == NULL) return i;
+  }
+  return -1;
+}
+
+void shift_to_head(struct node* file[100]) {
+  for (int i=1; i<100; i++) {
+    file[i-1] = file[i];
+  }
+  return;
+}
+
+void breath_first_search(struct node* root) {  //Breath-first print
+  //init file
+  struct node* file[100];
+  for (int i=0; i<100; i++) {
+    file[i] = NULL;
+  }
+  file[0] = root;
+
+  //search
+  while(file[0] != NULL) {
+    printf("%d ", file[0]->variable_index);
+    int empty_spot1 = empty_spot(file);
+    file[empty_spot1] = file[0]->lchild;
+    int empty_spot2 = empty_spot(file);
+    file[empty_spot2] = file[0]->rchild;
+    shift_to_head(file);
+  }
+  return;
+}
+
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+
+
+
 int main() {
   struct cache* cah = cah__empty();
   struct node* root = build_odd(weights, bias, cah);
@@ -87,5 +132,7 @@ int main() {
   if (cursor->eq_interval.lower_bound == 0 && cursor->eq_interval.upper_bound == INT_MAX) printf("1\n");
   else if (cursor->eq_interval.lower_bound == INT_MIN && cursor->eq_interval.upper_bound == 0) printf("0\n");
 
+  breath_first_search(root);
+  
   return 0;
 }
