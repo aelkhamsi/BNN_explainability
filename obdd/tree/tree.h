@@ -11,7 +11,10 @@ struct interval {
 };
 
 struct node {
+  //data
   struct interval eq_interval;
+  int variable_index;
+  //pt
   struct node* rchild;
   struct node* lchild;
 };
@@ -32,6 +35,8 @@ int tree__is_empty(const struct tree*);
 struct node* node__empty();
 
 int node__set_eq_interval(struct node*, int lower_bound, int upper_bound);
+
+int node__set_variable_index(struct node*, int variable_index);
 
 int node__add_rchild(struct node* parent, struct node* child);
 

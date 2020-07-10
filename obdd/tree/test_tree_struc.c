@@ -51,6 +51,17 @@ int test_node__set_eq_interval() {
   return 1;
 }
 
+int test_node__set_variable_index() {
+  struct node* node = node__empty();
+  assert(node->variable_index == -1);
+  assert(node__set_variable_index(node, 1));
+  assert(node->variable_index == 1);
+
+  node__free(node);
+  printf(". ");
+  return 1;
+}
+
 int test_node__add_rchild() {
   struct node* parent = node__empty();
   struct node* rchild = node__empty();
@@ -79,6 +90,7 @@ int main() {
   test_tree_is_empty();
   test_node__empty();
   test_node__set_eq_interval();
+  test_node__set_variable_index();
   test_node__add_rchild();
   test_node__add_rchild();
 
