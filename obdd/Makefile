@@ -2,7 +2,7 @@ CAH_DIR = cache/cache
 LNK_DIR = cache/link
 TREE_DIR = tree
 
-CPPFLAGS = -I ${CAH_DIR} -I ${LNK_DIR} -I ${TREE_DIR}
+CPPFLAGS = -I ${CAH_DIR} -I ${LNK_DIR} -I ${TREE_DIR} -I .
 BIN = link_struc cache_struc tree_struc
 
 CC ?= cc
@@ -26,15 +26,15 @@ clean:
 
 
 #main
-main.o: main.c ${CAH_DIR}/cache.h ${TREE_DIR}/tree.h #utils.h
+main.o: main.c ${CAH_DIR}/cache.h ${TREE_DIR}/tree.h utils.h
 	${CC} ${CPPFLAGS} ${CFLAGS} main.c -c
 
-main: main.o cache.o tree.o link.o #utils.o
-	${CC} main.o cache.o tree.o link.o -o $@ ${LDFLAGS}
+main: main.o cache.o tree.o link.o utils.o
+	${CC} main.o cache.o tree.o link.o utils.o -o $@ ${LDFLAGS}
 
 #print
-# utils.o: utils.c utils.h ${TREE_DIR}/tree.h
-# 	${CC} ${CPPFLAGS} ${CFLAGS} utils.c -c
+utils.o: utils.c utils.h ${TREE_DIR}/tree.h cst.h
+	${CC} ${CPPFLAGS} ${CFLAGS} utils.c -c
 
 
 
@@ -50,7 +50,7 @@ link_struc: test_link_struc.o link.o
 
 
 #cache
-cache.o: ${CAH_DIR}/cache.c ${CAH_DIR}/cache.h ${LNK_DIR}/link.h ${TREE_DIR}/tree.h
+cache.o: ${CAH_DIR}/cache.c ${CAH_DIR}/cache.h ${LNK_DIR}/link.h ${TREE_DIR}/tree.h cst.h
 	${CC} ${CPPFLAGS} ${CFLAGS} ${CAH_DIR}/cache.c -c
 
 test_cache_struc.o: ${CAH_DIR}/test_cache_struc.c ${CAH_DIR}/cache.h

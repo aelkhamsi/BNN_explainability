@@ -1,12 +1,12 @@
-#ifndef CAHCE_H
+#ifndef CACHE_H
 #define CACHE_H
 
 #include <stdlib.h>
 #include <stdio.h>
+
 #include <link.h>
 #include <tree.h>
-
-#define TREE_DEPTH 5
+#include <cst.h>
 
 
 struct cache {

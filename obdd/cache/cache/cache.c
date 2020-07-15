@@ -1,5 +1,5 @@
 #include "cache.h"
-#include <math.h>
+
 
 //AUXILIARY FUNCTIONS
 int num_digits(int n) {
