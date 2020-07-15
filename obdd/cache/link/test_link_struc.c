@@ -187,6 +187,19 @@ void test_lnk__remove_tail() {
   return;
 }
 
+void test_lnk__size() {
+  struct link* lnk = lnk__empty();
+  assert(lnk__size(lnk) == 0);
+
+  struct lelement* llm = llm__empty();
+  lnk__add_head(lnk, llm);
+  assert(lnk__size(lnk) == 1);
+
+  lnk__free(lnk);
+  printf(" .");
+  return;
+}
+
 int main() {
   test_lnk__empty();
   test_llm__empty();
@@ -200,6 +213,7 @@ int main() {
   test_lnk__remove_after();
   test_lnk__add_tail();
   test_lnk__remove_tail();
+  test_lnk__size();
 
   printf(" [");
   printf("\033[1;32m");

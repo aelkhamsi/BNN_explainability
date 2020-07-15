@@ -92,6 +92,16 @@ struct lelement* lnk__remove_tail(struct link* lnk) {
   return tail;
 }
 
+int lnk__size(struct link* lnk) {
+  int counter = 0;
+  struct lelement* cursor = lnk->head;
+  while(cursor->next != cursor && cursor != NULL) {
+    counter += 1;
+    cursor = cursor->next;
+  }
+  return counter;
+}
+
 
 //FREE
 int lnk__free(struct link* lnk) {

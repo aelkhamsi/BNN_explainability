@@ -14,6 +14,7 @@ struct node {
   //data
   struct interval eq_interval;
   int variable_index;
+  int version; //for the plot of the obdd
   //pt
   struct node* rchild;
   struct node* lchild;

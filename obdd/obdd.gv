@@ -1,0 +1,12 @@
+digraph{
+0->11 [style=solid, arrowhead="none"];
+0->11 [style=dotted, arrowhead="none"];
+11->21 [style=solid, arrowhead="none"];
+11->21 [style=dotted, arrowhead="none"];
+21->31 [style=solid, arrowhead="none"];
+21->31 [style=dotted, arrowhead="none"];
+31->41 [style=solid, arrowhead="none"];
+31->41 [style=dotted, arrowhead="none"];
+41->oneSink [style=solid, arrowhead="none"];
+41->oneSink [style=dotted, arrowhead="none"];
+}

@@ -43,6 +43,7 @@ int lnk__add_tail(struct link*, struct lelement*);
 
 struct lelement* lnk__remove_tail(struct link*);
 
+int lnk__size(struct link*);
 
 //FREE
 int lnk__free(struct link*);

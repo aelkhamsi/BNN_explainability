@@ -26,11 +26,16 @@ clean:
 
 
 #main
-main.o: main.c ${CAH_DIR}/cache.h ${TREE_DIR}/tree.h
+main.o: main.c ${CAH_DIR}/cache.h ${TREE_DIR}/tree.h #utils.h
 	${CC} ${CPPFLAGS} ${CFLAGS} main.c -c
 
-main: main.o cache.o tree.o link.o
+main: main.o cache.o tree.o link.o #utils.o
 	${CC} main.o cache.o tree.o link.o -o $@ ${LDFLAGS}
+
+#print
+# utils.o: utils.c utils.h ${TREE_DIR}/tree.h
+# 	${CC} ${CPPFLAGS} ${CFLAGS} utils.c -c
+
 
 
 #link
