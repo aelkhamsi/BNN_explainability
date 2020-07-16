@@ -8,7 +8,7 @@
 #include <limits.h>
 
 //GLOBAL VARIABLES
-float weights[] = {1, -1, 1, 1, -1, -1, 1, -1, 1, -1};
+float weights[] = {1, -1, -1, 1};
 int bias = 0.5;
 //////////////////
 
@@ -55,53 +55,41 @@ struct node* build_odd(float weights[], float bias, struct cache* cah) {  //log_
 }
 
 
+int odd__classify(struct node* root, int instance[]) {
+  struct node* cursor = root;
+  int variable_index = 0;
+  while(cursor->variable_index >= 0) {
+    cursor = instance[variable_index] ? cursor->rchild : cursor->lchild;
+    variable_index++;
+  }
+
+  if (cursor->variable_index == -1) return 1;
+  else if (cursor->variable_index == -2) return 0;
+  else return -1;
+}
+
 
 
 int main() {
   struct cache* cah = cah__empty();
   struct node* root = build_odd(weights, bias, cah);
 
-  breath_first_print(root);
+  //plot
   plot(root);
+
+
   cah__free(cah);
 
 
   //results
 
-  // for (int a=0; a<2; a++) {
-  //   for (int b=0; b<2; b++) {
-  //     for (int c=0; c<2; c++) {
-  //       for (int d=0; d<2; d++) {
-  //         for (int e=0; e<2; e++) {
-  //           int instance[] = {a, b, c, d, e};
-  //           struct node* cursor = root;
-  //           for (int i=0; i<TREE_DEPTH; i++) {
-  //             cursor = instance[i] ? cursor->rchild : cursor->lchild;
-  //           }
-  //
-  //           //result
-  //           if (cursor->eq_interval.lower_bound == 0 && cursor->eq_interval.upper_bound == INT_MAX) printf("1\n");
-  //           else if (cursor->eq_interval.lower_bound == INT_MIN && cursor->eq_interval.upper_bound == 0) printf("0\n");
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
-
-  //result
-
-  // int instance[] = {1, 0, 0, 1, 1};
-  // struct node* cursor = root;
-  // for (int i=0; i<TREE_DEPTH; i++) {
-  //   cursor = instance[i] ? cursor->rchild : cursor->lchild;
-  // }
-  // if (cursor->eq_interval.lower_bound == 0 && cursor->eq_interval.upper_bound == INT_MAX) printf("1\n");
-  // else if (cursor->eq_interval.lower_bound == INT_MIN && cursor->eq_interval.upper_bound == 0) printf("0\n");
-
-
-  //size of links in cache
-  // printf("%d", lnk__size(cah->set[TREE_DEPTH]));
+  for (int a=0; a<2; a++)
+    for (int b=0; b<2; b++)
+      for (int c=0; c<2; c++)
+        for (int d=0; d<2; d++) {
+          int instance[] = {a, b, c, d};
+          printf("[%d, %d, %d, %d] -> %d\n", a, b, c, d, odd__classify(root, instance));
+        }
 
 
 
