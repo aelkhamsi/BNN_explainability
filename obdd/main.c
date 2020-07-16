@@ -1,7 +1,7 @@
 #include "tree.h"
 #include "cache.h"
 #include "utils.h"
-
+#include "neuron.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -78,20 +78,21 @@ int main() {
   plot(root);
 
 
+  //test
+  // struct neuron n = nrn__empty();
+  // nrn__set_weights(n, weights, 4);
+  // nrn__set_bias(n, bias);
+  //
+  // for (int a=0; a<2; a++)
+  //   for (int b=0; b<2; b++)
+  //     for (int c=0; c<2; c++)
+  //       for (int d=0; d<2; d++) {
+  //         int instance[] = {a, b, c, d};
+  //         printf("[%d, %d, %d, %d] -> odd: %d | neuron: %d\n", a, b, c, d, odd__classify(root, instance), nrn__classify(n, instance, 4));
+  //         // assert(odd__classify(root, instance) == nrn__classify(n, instance, 4));
+  //       }
+
   cah__free(cah);
-
-
-  //results
-
-  for (int a=0; a<2; a++)
-    for (int b=0; b<2; b++)
-      for (int c=0; c<2; c++)
-        for (int d=0; d<2; d++) {
-          int instance[] = {a, b, c, d};
-          printf("[%d, %d, %d, %d] -> %d\n", a, b, c, d, odd__classify(root, instance));
-        }
-
-
 
   return 0;
 }

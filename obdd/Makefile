@@ -2,9 +2,10 @@ CAH_DIR = cache
 LNK_DIR = link
 TREE_DIR = tree
 LST_DIR = list
+NRN_DIR = neuron
 
-CPPFLAGS = -I ${CAH_DIR} -I ${LNK_DIR} -I ${TREE_DIR} -I .
-BIN = link_struc list_struc cache_struc tree_struc
+CPPFLAGS = -I ${CAH_DIR} -I ${LNK_DIR} -I ${TREE_DIR} -I ${LST_DIR} -I ${NRN_DIR} -I .
+BIN = link_struc list_struc cache_struc tree_struc neuron_struc
 
 CC ?= cc
 CFLAGS = -Wall -Wextra -std=c99 -g
@@ -27,11 +28,11 @@ clean:
 
 
 #main
-main.o: main.c ${CAH_DIR}/cache.h ${TREE_DIR}/tree.h utils.h
+main.o: main.c ${CAH_DIR}/cache.h ${TREE_DIR}/tree.h ${NRN_DIR}/neuron.h utils.h
 	${CC} ${CPPFLAGS} ${CFLAGS} main.c -c
 
-main: main.o cache.o tree.o link.o utils.o
-	${CC} main.o cache.o tree.o link.o utils.o -o $@ ${LDFLAGS}
+main: main.o cache.o tree.o link.o list.o neuron.o utils.o
+	${CC} main.o cache.o tree.o link.o utils.o list.o neuron.o -o $@ ${LDFLAGS}
 
 #print
 utils.o: utils.c utils.h ${TREE_DIR}/tree.h cst.h
@@ -81,3 +82,14 @@ test_list_struc.o: ${LST_DIR}/test_list_struc.c ${LST_DIR}/list.h
 
 list_struc: test_list_struc.o list.o
 	${CC} test_list_struc.o list.o -o $@ ${LDFLAGS}
+
+
+#neuron
+neuron.o: ${NRN_DIR}/neuron.c ${NRN_DIR}/neuron.h ${LST_DIR}/list.h
+	${CC} ${CPPFLAGS} ${CFLAGS} ${NRN_DIR}/neuron.c -c
+
+test_neuron_struc.o: ${NRN_DIR}/test_neuron_struc.c ${NRN_DIR}/neuron.h
+	${CC} ${CPPFLAGS} ${CFLAGS} ${NRN_DIR}/test_neuron_struc.c -c
+
+neuron_struc: test_neuron_struc.o neuron.o list.o
+	${CC} test_neuron_struc.o neuron.o list.o -o $@ ${LDFLAGS}

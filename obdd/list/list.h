@@ -8,7 +8,7 @@
 
 
 struct list {
-  int *l;
+  float *l;
   size_t capacity;
   size_t size;
 };
@@ -18,11 +18,11 @@ struct list* list__empty(void); //constuctor
 
 int list__is_empty(const struct list *s);
 
-int list__add(struct list*, int c); //effet de bord
+int list__add(struct list*, float c); //effet de bord
 
 int list__size(const struct list*);
 
-int list__find(const struct list*, int c);
+int list__find(const struct list*, float c);
 
 
 //free
