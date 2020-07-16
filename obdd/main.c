@@ -8,7 +8,7 @@
 #include <limits.h>
 
 //GLOBAL VARIABLES
-float weights[] = {1, -1, -1, 1, 1, -1, -1, 1};
+float weights[] = {1, -1, 1, 1, -1, -1, 1, -1, 1, -1};
 int bias = 0.5;
 //////////////////
 
@@ -22,7 +22,7 @@ struct node* build_sub_odd(int depth, float plo, struct cache* cah) {  //plo == 
   node__set_variable_index(node, depth);
 
   for (int e=0; e<=1; e++) {  //every value ek+1 of Ek+1
-    float weight_child = 1/2 * (e ? weights[depth] : -1*weights[depth]);
+    float weight_child = 0.5 * (e==1 ? weights[depth] : -1*weights[depth]);
     float plo_child = plo + weight_child;
     //searching for child node in cache
     struct node* child = cah__find(cah, depth+1, plo_child);
@@ -30,7 +30,7 @@ struct node* build_sub_odd(int depth, float plo, struct cache* cah) {  //plo == 
       child = build_sub_odd(depth+1, plo_child, cah);
     }
     //add_child
-    e ? node__add_rchild(node, child): node__add_lchild(node, child);
+    e==1 ? node__add_rchild(node, child): node__add_lchild(node, child);
     //update eq_interval
     node->eq_interval = conjunction(node->eq_interval, offset(child->eq_interval, -1*weight_child));
   }
