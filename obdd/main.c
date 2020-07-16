@@ -8,8 +8,8 @@
 #include <limits.h>
 
 //GLOBAL VARIABLES
-float weights[] = {1, -1, -1, 1, 1};
-int bias = 1;
+float weights[] = {1, -1, -1, 1, 1, -1, -1, 1};
+int bias = 0.5;
 //////////////////
 
 
@@ -60,7 +60,7 @@ struct node* build_odd(float weights[], float bias, struct cache* cah) {  //log_
 int main() {
   struct cache* cah = cah__empty();
   struct node* root = build_odd(weights, bias, cah);
-  
+
   breath_first_print(root);
   plot(root);
   cah__free(cah);

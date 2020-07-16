@@ -7,6 +7,12 @@ digraph{
 21->31 [style=dotted, arrowhead="none"];
 31->41 [style=solid, arrowhead="none"];
 31->41 [style=dotted, arrowhead="none"];
-41->oneSink [style=solid, arrowhead="none"];
-41->oneSink [style=dotted, arrowhead="none"];
+41->51 [style=solid, arrowhead="none"];
+41->51 [style=dotted, arrowhead="none"];
+51->61 [style=solid, arrowhead="none"];
+51->61 [style=dotted, arrowhead="none"];
+61->71 [style=solid, arrowhead="none"];
+61->71 [style=dotted, arrowhead="none"];
+71->oneSink [style=solid, arrowhead="none"];
+71->oneSink [style=dotted, arrowhead="none"];
 }
