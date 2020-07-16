@@ -1,9 +1,10 @@
-CAH_DIR = cache/cache
-LNK_DIR = cache/link
+CAH_DIR = cache
+LNK_DIR = link
 TREE_DIR = tree
+LST_DIR = list
 
 CPPFLAGS = -I ${CAH_DIR} -I ${LNK_DIR} -I ${TREE_DIR} -I .
-BIN = link_struc cache_struc tree_struc
+BIN = link_struc list_struc cache_struc tree_struc
 
 CC ?= cc
 CFLAGS = -Wall -Wextra -std=c99 -g
@@ -69,3 +70,14 @@ test_tree_struc.o: ${TREE_DIR}/test_tree_struc.c ${TREE_DIR}/tree.h
 
 tree_struc: test_tree_struc.o tree.o
 	${CC} test_tree_struc.o tree.o -o $@ ${LDFLAGS}
+
+
+#list
+list.o: ${LST_DIR}/list.c ${LST_DIR}/list.h
+	${CC} ${CPPFLAGS} ${CFLAGS} ${LST_DIR}/list.c -c
+
+test_list_struc.o: ${LST_DIR}/test_list_struc.c ${LST_DIR}/list.h
+	${CC} ${CPPFLAGS} ${CFLAGS} ${LST_DIR}/test_list_struc.c -c
+
+list_struc: test_list_struc.o list.o
+	${CC} test_list_struc.o list.o -o $@ ${LDFLAGS}
