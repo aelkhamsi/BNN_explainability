@@ -1,6 +1,6 @@
 # M2R
 
-## For OBDD compilation
+## For OBDD compilation of a neuron
 In the **obdd** folder, follow these instructions:
 
 1. Enter the **number of inputs** of the neuron by modifying the '#define TREE_DEPTH ...' in **cst.h**
