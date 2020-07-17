@@ -69,6 +69,28 @@ int odd__classify(struct node* root, int instance[]) {
 }
 
 
+double test(struct node* root) {
+  struct neuron n = nrn__empty();
+  nrn__set_weights(n, weights, TREE_DEPTH);
+  nrn__set_bias(n, bias);
+  int correct = 0;
+  int total = 0;
+
+  for (int a=0; a<2; a++)
+    for (int b=0; b<2; b++)
+      for (int c=0; c<2; c++)
+        for (int d=0; d<2; d++) {
+          int instance[] = {a, b, c, d};
+          if (odd__classify(root, instance) == nrn__classify(n, instance, TREE_DEPTH))
+            correct+=1;
+          total+=1;
+          // printf("[%d, %d, %d, %d] -> odd: %d | neuron: %d\n", a, b, c, d, odd__classify(root, instance), nrn__classify(n, instance, 4));
+          // assert(odd__classify(root, instance) == nrn__classify(n, instance, 4));
+        }
+  return ((double)correct/(double)total)*100;
+}
+
+
 
 int main() {
   struct cache* cah = cah__empty();
@@ -77,20 +99,9 @@ int main() {
   //plot
   plot(root);
 
-
   //test
-  // struct neuron n = nrn__empty();
-  // nrn__set_weights(n, weights, 4);
-  // nrn__set_bias(n, bias);
-  //
-  // for (int a=0; a<2; a++)
-  //   for (int b=0; b<2; b++)
-  //     for (int c=0; c<2; c++)
-  //       for (int d=0; d<2; d++) {
-  //         int instance[] = {a, b, c, d};
-  //         printf("[%d, %d, %d, %d] -> odd: %d | neuron: %d\n", a, b, c, d, odd__classify(root, instance), nrn__classify(n, instance, 4));
-  //         // assert(odd__classify(root, instance) == nrn__classify(n, instance, 4));
-  //       }
+  double precision = test(root);
+  printf("ODD Precision: %f %% \n", precision);
 
   cah__free(cah);
 
