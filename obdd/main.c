@@ -35,6 +35,9 @@ struct node* build_sub_odd(int depth, float plo, struct cache* cah) {  //plo == 
     node->eq_interval = conjunction(node->eq_interval, offset(child->eq_interval, -1*weight_child));
   }
 
+  if (node->rchild == node->lchild)
+    return node->rchild;
+
   cah__store(cah, depth, node);
   return node;
 }
