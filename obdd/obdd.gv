@@ -4,13 +4,17 @@ digraph{
 11->22 [style=solid, arrowhead="none"];
 11->21 [style=dotted, arrowhead="none"];
 12->21 [style=solid, arrowhead="none"];
-12->21 [style=dotted, arrowhead="none"];
-21->31 [style=solid, arrowhead="none"];
+12->23 [style=dotted, arrowhead="none"];
+21->32 [style=solid, arrowhead="none"];
 21->31 [style=dotted, arrowhead="none"];
-22->32 [style=solid, arrowhead="none"];
-22->31 [style=dotted, arrowhead="none"];
+22->33 [style=solid, arrowhead="none"];
+22->32 [style=dotted, arrowhead="none"];
+23->31 [style=solid, arrowhead="none"];
+23->31 [style=dotted, arrowhead="none"];
 31->oneSink [style=solid, arrowhead="none"];
 31->oneSink [style=dotted, arrowhead="none"];
-32->zeroSink [style=solid, arrowhead="none"];
+32->oneSink [style=solid, arrowhead="none"];
 32->zeroSink [style=dotted, arrowhead="none"];
+33->zeroSink [style=solid, arrowhead="none"];
+33->zeroSink [style=dotted, arrowhead="none"];
 }

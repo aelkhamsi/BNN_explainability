@@ -9,7 +9,7 @@
 #include "cst.h"
 
 
-struct interval offset(struct interval interval, int offset);
+struct interval offset(struct interval interval, float offset);
 
 float sum(float weights[]);
 

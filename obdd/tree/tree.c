@@ -25,7 +25,7 @@ struct node* node__empty() {
   return n;
 }
 
-int node__set_eq_interval(struct node* n, int lower_bound, int upper_bound) {
+int node__set_eq_interval(struct node* n, float lower_bound, float upper_bound) {
   n->eq_interval.upper_bound = upper_bound;
   n->eq_interval.lower_bound = lower_bound;
   return 1;

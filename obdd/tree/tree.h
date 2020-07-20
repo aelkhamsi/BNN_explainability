@@ -6,8 +6,8 @@
 
 
 struct interval {
-  int lower_bound;
-  int upper_bound;
+  float lower_bound;
+  float upper_bound;
 };
 
 struct node {
@@ -35,7 +35,7 @@ int tree__is_empty(const struct tree*);
 //NODE
 struct node* node__empty();
 
-int node__set_eq_interval(struct node*, int lower_bound, int upper_bound);
+int node__set_eq_interval(struct node*, float lower_bound, float upper_bound);
 
 int node__set_variable_index(struct node*, int variable_index);
 

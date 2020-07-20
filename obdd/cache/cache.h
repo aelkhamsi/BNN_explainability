@@ -20,7 +20,7 @@ int cah__add_llm(struct cache*, int depth, struct lelement*);
 
 int cah__store(struct cache*, int depth, struct node*);
 
-struct node* cah__find(struct cache*, int depth, int evidence_weight);  //struct node* or NULL
+struct node* cah__find(struct cache*, int depth, float evidence_weight);  //struct node* or NULL
 
 
 //FREE

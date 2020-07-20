@@ -2,7 +2,7 @@
 
 
 //AUXILIARY FUNCTIONS
-struct interval offset(struct interval interval, int offset) {
+struct interval offset(struct interval interval, float offset) {
   struct interval new_interval = {INT_MIN, INT_MAX};
   if (interval.lower_bound != INT_MIN)
     new_interval.lower_bound = interval.lower_bound + offset;
@@ -13,7 +13,7 @@ struct interval offset(struct interval interval, int offset) {
 
 
 float sum(float weights[]) {
-  float sum = 0;
+  float sum = 0.0;
   for (int i=0; i<TREE_DEPTH; i++) {
     sum += weights[i];
   }
@@ -22,12 +22,13 @@ float sum(float weights[]) {
 
 
 struct interval conjunction(struct interval interval1, struct interval interval2) {
-  int lower_bound = interval1.lower_bound < interval2.lower_bound ? interval2.lower_bound : interval1.lower_bound;
-  int upper_bound = interval1.upper_bound < interval2.upper_bound ? interval1.upper_bound : interval2.upper_bound;
+  float lower_bound = interval1.lower_bound < interval2.lower_bound ? interval2.lower_bound : interval1.lower_bound;
+  float upper_bound = interval1.upper_bound < interval2.upper_bound ? interval1.upper_bound : interval2.upper_bound;
   struct interval conj_int = {lower_bound, upper_bound};
   return conj_int;
 }
 /////////////////////
+
 
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
@@ -68,7 +69,7 @@ void breath_first_print(struct node* root) {  //Breath-first print
       variable_index = file[0]->variable_index;
       printf("\n");
     }
-    printf("%d [%d, %d] | ", file[0]->variable_index, file[0]->eq_interval.lower_bound, file[0]->eq_interval.upper_bound);
+    printf("%d [%f, %f] | ", file[0]->variable_index, file[0]->eq_interval.lower_bound, file[0]->eq_interval.upper_bound);
     add_in_file(file, file[0]->lchild);
     add_in_file(file, file[0]->rchild);
     shift_to_head(file);

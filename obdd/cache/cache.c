@@ -43,7 +43,7 @@ int cah__store(struct cache* cah, int depth, struct node* node) {
 }
 
 
-struct node* cah__find(struct cache* cah, int depth, int evidence_weight) {
+struct node* cah__find(struct cache* cah, int depth, float evidence_weight) {
   struct link* lnk = cah->set[depth];
   struct lelement* cursor = lnk->head;
   while (cursor->next != cursor && cursor != NULL) {

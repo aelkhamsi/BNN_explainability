@@ -8,8 +8,8 @@
 #include <limits.h>
 
 //GLOBAL VARIABLES
-float weights[] = {1, -1, -1, 1};
-int bias = 0.5;
+float weights[] = {1.0, -1.0, -1.0, 1.0};
+float bias = 0.5;
 //////////////////
 
 
@@ -51,7 +51,10 @@ struct node* build_odd(float weights[], float bias, struct cache* cah) {  //log_
   node__set_variable_index(zero_sink, -2);
   cah__store(cah, TREE_DEPTH, zero_sink);
 
-  return build_sub_odd(0, bias + 1/2 * sum(weights), cah);
+  float prior_log_odds = bias + 0.5 * sum(weights);
+  printf("BIAS: %f\n", bias);
+  printf("PLO: %f\n", prior_log_odds);
+  return build_sub_odd(0, prior_log_odds, cah);
 }
 
 
