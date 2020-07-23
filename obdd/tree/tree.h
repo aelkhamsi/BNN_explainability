@@ -3,11 +3,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 
 struct interval {
   float lower_bound;
   float upper_bound;
+  bool empty;
 };
 
 struct node {

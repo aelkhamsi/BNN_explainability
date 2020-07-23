@@ -48,7 +48,7 @@ struct node* cah__find(struct cache* cah, int depth, float evidence_weight) {
   struct lelement* cursor = lnk->head;
   while (cursor->next != cursor && cursor != NULL) {
     struct node* node = cursor->pt;
-    if (evidence_weight >= node->eq_interval.lower_bound && evidence_weight < node->eq_interval.upper_bound)
+    if (node->eq_interval.empty == false && evidence_weight >= node->eq_interval.lower_bound && evidence_weight < node->eq_interval.upper_bound)
       return node;
     cursor = cursor->next;
   }

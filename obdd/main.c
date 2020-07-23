@@ -8,8 +8,8 @@
 #include <limits.h>
 
 //GLOBAL VARIABLES
-float weights[] = {1.0, -1.0, -1.0, 1.0};
-float bias = 0.5;
+float weights[] = {1.0, -1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0};
+float bias = 0.2;
 //////////////////
 
 
@@ -18,7 +18,7 @@ float bias = 0.5;
 //MAIN
 struct node* build_sub_odd(int depth, float plo, struct cache* cah) {  //plo == prior_log_odds
   struct node* node = node__empty();
-  node__set_eq_interval(node, INT_MIN, INT_MAX);
+  node__set_eq_interval(node, (float)INT_MIN, (float)INT_MAX);
   node__set_variable_index(node, depth);
 
   for (int e=0; e<=1; e++) {  //every value ek+1 of Ek+1
@@ -26,17 +26,23 @@ struct node* build_sub_odd(int depth, float plo, struct cache* cah) {  //plo == 
     float plo_child = plo + weight_child;
     //searching for child node in cache
     struct node* child = cah__find(cah, depth+1, plo_child);
-    if (child == NULL) {
+    if (child == NULL)
       child = build_sub_odd(depth+1, plo_child, cah);
-    }
+
     //add_child
     e==1 ? node__add_rchild(node, child): node__add_lchild(node, child);
     //update eq_interval
     node->eq_interval = conjunction(node->eq_interval, offset(child->eq_interval, -1*weight_child));
+
+    // printf("[%f, %f]\n", node->eq_interval.lower_bound, node->eq_interval.upper_bound);
+    // node->eq_interval.empty ? printf("empty\n") : printf("not empty\n");
   }
 
-  if (node->rchild == node->lchild)
-    return node->rchild;
+  if (node->rchild == node->lchild) {
+    struct node* child = node->rchild;
+    free(node);
+    return child;
+  }
 
   cah__store(cah, depth, node);
   return node;
@@ -45,12 +51,12 @@ struct node* build_sub_odd(int depth, float plo, struct cache* cah) {  //plo == 
 
 struct node* build_odd(float weights[], float bias, struct cache* cah) {  //log_odds threshold == 0
   struct node* one_sink = node__empty();
-  node__set_eq_interval(one_sink, 0, INT_MAX);
+  node__set_eq_interval(one_sink, 0.0, (float)INT_MAX);
   node__set_variable_index(one_sink, -1);
   cah__store(cah, TREE_DEPTH, one_sink);
 
   struct node* zero_sink = node__empty();
-  node__set_eq_interval(zero_sink, INT_MIN, 0);
+  node__set_eq_interval(zero_sink, (float)INT_MIN, 0.0);
   node__set_variable_index(zero_sink, -2);
   cah__store(cah, TREE_DEPTH, zero_sink);
 
@@ -86,7 +92,7 @@ double test(struct node* root) {
     for (int b=0; b<2; b++)
       for (int c=0; c<2; c++)
         for (int d=0; d<2; d++) {
-          int instance[] = {a, b, c, d};
+          int instance[] = {a, 0, 0, b, 0, c, 0, d, 0, 0};
           if (odd__classify(root, instance) == nrn__classify(n, instance, TREE_DEPTH))
             correct+=1;
           total+=1;
@@ -95,6 +101,8 @@ double test(struct node* root) {
         }
   return ((double)correct/(double)total)*100;
 }
+
+
 
 
 
@@ -108,6 +116,10 @@ int main() {
   //test
   double precision = test(root);
   printf("ODD Precision: %f %% \n", precision);
+
+  // check_cah(cah);
+  count_cache(cah);
+  print_cache(cah);
 
   cah__free(cah);
 

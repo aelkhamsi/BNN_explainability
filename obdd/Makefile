@@ -35,7 +35,7 @@ main: main.o cache.o tree.o link.o list.o neuron.o utils.o
 	${CC} main.o cache.o tree.o link.o utils.o list.o neuron.o -o $@ ${LDFLAGS}
 
 #print
-utils.o: utils.c utils.h ${TREE_DIR}/tree.h cst.h
+utils.o: utils.c utils.h ${TREE_DIR}/tree.h cst.h ${CAH_DIR}/cache.h
 	${CC} ${CPPFLAGS} ${CFLAGS} utils.c -c
 
 

@@ -19,6 +19,7 @@ struct node* node__empty() {
   struct node* n = malloc(sizeof(struct node));
   n->eq_interval.upper_bound = INT_MAX;
   n->eq_interval.lower_bound = INT_MIN;
+  n->eq_interval.empty=false;
   n->variable_index = -1;
   n->rchild = NULL;
   n->lchild = NULL;
@@ -26,8 +27,9 @@ struct node* node__empty() {
 }
 
 int node__set_eq_interval(struct node* n, float lower_bound, float upper_bound) {
-  n->eq_interval.upper_bound = upper_bound;
   n->eq_interval.lower_bound = lower_bound;
+  n->eq_interval.upper_bound = upper_bound;
+  n->eq_interval.empty=false;
   return 1;
 }
 
