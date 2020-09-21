@@ -8,8 +8,9 @@
 #include <limits.h>
 
 //GLOBAL VARIABLES
-float weights[] = {1.0, -1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0};
-float bias = 0.2;
+float weights[] = {1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0};
+//float weights[] = {1.1, -0.6, 1.234, 0.236, 0.548, -1.553, 0.036, 0.448, -0.488, -1.233};
+float bias = 0.4;
 //////////////////
 
 
@@ -69,10 +70,8 @@ struct node* build_odd(float weights[], float bias, struct cache* cah) {  //log_
 
 int odd__classify(struct node* root, int instance[]) {
   struct node* cursor = root;
-  int variable_index = 0;
   while(cursor->variable_index >= 0) {
-    cursor = instance[variable_index] ? cursor->rchild : cursor->lchild;
-    variable_index++;
+    cursor = instance[cursor->variable_index] ? cursor->rchild : cursor->lchild;
   }
 
   if (cursor->variable_index == -1) return 1;
@@ -95,10 +94,26 @@ double test(struct node* root) {
           int instance[] = {a, 0, 0, b, 0, c, 0, d, 0, 0};
           if (odd__classify(root, instance) == nrn__classify(n, instance, TREE_DEPTH))
             correct+=1;
+          else
+            printf("[%d, 0, 0, %d, 0, %d, 0, %d, 0, 0] -> odd: %d | neuron: %d\n", a, b, c, d, odd__classify(root, instance), nrn__classify(n, instance, TREE_DEPTH));
           total+=1;
           // printf("[%d, %d, %d, %d] -> odd: %d | neuron: %d\n", a, b, c, d, odd__classify(root, instance), nrn__classify(n, instance, 4));
           // assert(odd__classify(root, instance) == nrn__classify(n, instance, 4));
         }
+
+  // for (int a=0; a<2; a++)
+  //   for (int b=0; b<2; b++)
+  //     for (int c=0; c<2; c++) {
+  //
+  //         int instance[] = {a, b, c};
+  //         if (odd__classify(root, instance) == nrn__classify(n, instance, TREE_DEPTH))
+  //           correct+=1;
+  //         else
+  //           printf("[%d, %d, %d] -> odd: %d | neuron: %d\n", a, b, c, odd__classify(root, instance), nrn__classify(n, instance, TREE_DEPTH));
+  //         total+=1;
+  //         // printf("[%d, %d, %d, %d] -> odd: %d | neuron: %d\n", a, b, c, d, odd__classify(root, instance), nrn__classify(n, instance, 4));
+  //         // assert(odd__classify(root, instance) == nrn__classify(n, instance, 4));
+  //     }
   return ((double)correct/(double)total)*100;
 }
 

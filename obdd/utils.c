@@ -81,14 +81,23 @@ void breath_first_print(struct node* root) {  //Breath-first print
   return;
 }
 
+int plotted(struct node* plotted_set[100], struct node* node) {
+  for (int i=0; i<100; i++) {
+    if (plotted_set[i] == node)
+      return 1;
+  }
+  return 0;
+}
 
 void plot(struct node* root) {
   char* dotted_line = "[style=dotted, arrowhead=\"none\"];\n";
   char* solid_line = "[style=solid, arrowhead=\"none\"];\n";
   //ptr file
   struct node* file[100];
+  struct node* plotted_set[100];
   for (int i=0; i<100; i++) {
     file[i] = NULL;
+    plotted_set[i] = NULL;
   }
   file[0] = root;
   //open gv file
@@ -98,44 +107,43 @@ void plot(struct node* root) {
     exit(1);
   }
   //write
-  // a[label=<Birth of George Washington<BR />
-  //       <FONT POINT-SIZE="10">See also: American Revolution</FONT>>];
-  // fprintf(fptr, "%d [label=\<%d\<BR /\> \<FONT POINT-SIZE=\"10\"\>[%.1f, %.1f[\</FONT\>\>];\n", file[0]->version, file[0]->variable_index, file[0]->eq_interval.lower_bound, file[0]->eq_interval.upper_bound);
-
-
   while(file[0] != NULL) {
-    if (file[0]->rchild != NULL) {
-      // fprintf(fptr, "%d [label=\"%d\", xlabel=\"[%.1f, %.1f[\"];\n", file[0]->version, file[0]->variable_index, file[0]->eq_interval.lower_bound, file[0]->eq_interval.upper_bound);
+    if (!plotted(plotted_set, file[0]) && file[0]->rchild != NULL && file[0]->rchild != NULL) { // not plotted && != oneSink && != zeroSink
       fprintf(fptr, "%d [label=<<B>%d</B><BR /> <FONT POINT-SIZE=\"10\">[%.1f, %.1f[</FONT>>];\n", file[0]->version, file[0]->variable_index, file[0]->eq_interval.lower_bound, file[0]->eq_interval.upper_bound);
-      if (file[0]->rchild->variable_index == -1) {
-        fprintf(fptr, "%d->%s ", file[0]->version, "oneSink");
-        fprintf(fptr, "%s", solid_line);
+
+      if (file[0]->rchild != NULL) {
+        if (file[0]->rchild->variable_index == -1) {
+          fprintf(fptr, "%d->%s ", file[0]->version, "oneSink");
+          fprintf(fptr, "%s", solid_line);
+        }
+        else if (file[0]->rchild->variable_index == -2) {
+          fprintf(fptr, "%d->%s ", file[0]->version, "zeroSink");
+          fprintf(fptr, "%s", solid_line);
+        }
+        else {
+          fprintf(fptr, "%d->%d ", file[0]->version, file[0]->rchild->version);
+          fprintf(fptr, "%s", solid_line);
+        }
+        add_in_file(file, file[0]->rchild);
       }
-      else if (file[0]->rchild->variable_index == -2) {
-        fprintf(fptr, "%d->%s ", file[0]->version, "zeroSink");
-        fprintf(fptr, "%s", solid_line);
-      }
-      else {
-        fprintf(fptr, "%d->%d ", file[0]->version, file[0]->rchild->version);
-        fprintf(fptr, "%s", solid_line);
-      }
-    }
-    if (file[0]->lchild != NULL) {
-      if (file[0]->lchild->variable_index == -1) {
-        fprintf(fptr, "%d->%s ", file[0]->version, "oneSink");
-        fprintf(fptr, "%s", dotted_line);
-      }
-      else if (file[0]->lchild->variable_index == -2) {
-        fprintf(fptr, "%d->%s ", file[0]->version, "zeroSink");
-        fprintf(fptr, "%s", dotted_line);
-      } else {
-        fprintf(fptr, "%d->%d ", file[0]->version, file[0]->lchild->version);
-        fprintf(fptr, "%s", dotted_line);
+
+      if (file[0]->lchild != NULL) {
+        if (file[0]->lchild->variable_index == -1) {
+          fprintf(fptr, "%d->%s ", file[0]->version, "oneSink");
+          fprintf(fptr, "%s", dotted_line);
+        }
+        else if (file[0]->lchild->variable_index == -2) {
+          fprintf(fptr, "%d->%s ", file[0]->version, "zeroSink");
+          fprintf(fptr, "%s", dotted_line);
+        } else {
+          fprintf(fptr, "%d->%d ", file[0]->version, file[0]->lchild->version);
+          fprintf(fptr, "%s", dotted_line);
+        }
+        add_in_file(file, file[0]->lchild);
       }
     }
 
-    add_in_file(file, file[0]->lchild);
-    add_in_file(file, file[0]->rchild);
+    add_in_file(plotted_set, file[0]);
     shift_to_head(file);
   }
   fprintf(fptr, "}");
