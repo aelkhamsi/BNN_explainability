@@ -6,7 +6,7 @@ https://documentcloud.adobe.com/link/review?uri=urn:aaid:scds:US:666a19ee-db33-4
 ## BNN (Binarized Neural Networks)
 In the **bnn** folder, we developed a BNN for the dataset MNIST, along with a CNN and a classical NN for performance comparison.
 
-We extended the study of BNN to more datasets like CIFAR10 and BreastCancerDiagnose. We also compared between the preformance of different types of networks. For more convenience, we've worked with Google Colaboratory so that the code will be ready to run. You will find a lot of ressources in the following link:
+We extended the study of BNN to more datasets like CIFAR10 and BreastCancerDiagnose. We also compared between the preformance of different types of networks. For more convenience, we've worked with Google Colaboratory so that the code will be ready to run. All of the experimentations are grouped in this Drive folder:
 https://drive.google.com/drive/folders/1jPQTYmlhDubGk8le6MMNZNNgtv1GQqA7?usp=sharing
 
 
