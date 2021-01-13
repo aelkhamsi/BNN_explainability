@@ -1,4 +1,4 @@
-# M2R
+# BNN Explainability
 
 We explored is this project a variant of neural networks with binary parameters (Binarized neural networks). We've tried to compile this type of networks into OBDDs (Ordered Binary Decision Diagram) and use the compiled version to explain decisions taken by the original neural networks. The report of our study gives a lot of insight and list all the ressources that we've used to carry out successfully this project. You can read the study report by following the link bellow:
 https://documentcloud.adobe.com/link/review?uri=urn:aaid:scds:US:666a19ee-db33-404a-ae71-5f0cba59149b
